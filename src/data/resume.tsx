@@ -120,8 +120,8 @@ interface PortfolioData {
 
 // Export the main DATA object (populate with placeholders first)
 export const DATA: PortfolioData = {
-  name: "Your Name", // Replace
-  initials: "YN", // Replace
+  name: "Denis", // Replace
+  initials: "DR", // Replace
   url: "https://yourdomain.com", // Replace
   location: "Your City, Country", // Replace
   // locationLink: "link_to_google_maps", // Optional
