@@ -1,4 +1,6 @@
+import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
@@ -25,12 +27,20 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          "max-w-4xl mx-auto py-12 sm:py-24 px-6",
           fontSans.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <main>{children}</main>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          {" "}
+          <TooltipProvider delayDuration={0}>
+            {" "}
+            <Navbar />
+            <main className="flex-1 max-w-4xl mx-auto py-12 sm:py-16 px-6">
+              {" "}
+              {children}
+            </main>
+            {/* Optional Footer can go here */}
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
