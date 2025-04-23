@@ -23,7 +23,8 @@ interface ContactInfo {
 }
 
 // Define the categories for filtering
-export type PortfolioPath = "slam" | "solopreneur" | "music";
+export const ALL_PORTFOLIO_PATHS = ["slam", "solopreneur", "music"] as const;
+export type PortfolioPath = (typeof ALL_PORTFOLIO_PATHS)[number];
 
 interface WorkExperience {
   company: string;
