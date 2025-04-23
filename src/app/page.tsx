@@ -20,26 +20,22 @@ export default function HomePage() {
     <main className="flex flex-col space-y-16">
       {/* --- Hero Section --- */}
       <section id="hero">
-        {/* Wrap the entire hero content */}
         <BlurFade delay={BLUR_FADE_DELAY * 0}>
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex flex-1 flex-col space-y-2">
-              {" "}
-              {/* Increased space slightly */}
-              {/* Wrap individual elements for staggered effect */}
+          <div className="flex flex-col-reverse items-center gap-8 md:flex-row md:justify-between">
+            <div className="flex flex-1 flex-col space-y-2 text-center md:text-left">
               <BlurFade delay={BLUR_FADE_DELAY * 1}>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                   Hi, I'm {DATA.name.split(" ")[0]} 👋
                 </h1>
               </BlurFade>
               <BlurFade delay={BLUR_FADE_DELAY * 2}>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto md:mx-0">
                   {DATA.description}
                 </p>
               </BlurFade>
               <BlurFade delay={BLUR_FADE_DELAY * 3}>
                 {DATA.location && (
-                  <p className="max-w-[600px] text-sm text-muted-foreground flex items-center gap-1">
+                  <div className="max-w-[600px] text-sm text-muted-foreground flex items-center justify-center md:justify-start gap-1 pt-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"
@@ -65,15 +61,15 @@ export default function HomePage() {
                         {DATA.location}
                       </a>
                     ) : (
-                      DATA.location
+                      <span>{DATA.location}</span>
                     )}
-                  </p>
+                  </div>
                 )}
               </BlurFade>
             </div>
             {/* Avatar */}
             <BlurFade delay={BLUR_FADE_DELAY * 4}>
-              <Avatar className="size-28 border">
+              <Avatar className="size-28 md:size-36 border">
                 <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
                 <AvatarFallback>{DATA.initials}</AvatarFallback>
               </Avatar>
