@@ -14,7 +14,7 @@ import Link from "next/link";
 const BLUR_FADE_DELAY = 0.04;
 
 export default function HomePage() {
-  const defaultPath: PortfolioPath = "slam";
+  const defaultPath: PortfolioPath = "engineer";
 
   return (
     <main className="flex flex-col space-y-16">
@@ -105,51 +105,117 @@ export default function HomePage() {
 
             {ALL_PORTFOLIO_PATHS.map((path: PortfolioPath) => (
               <TabsContent key={path} value={path} className="mt-0">
-                {/* Base delay for content within a tab */}
-                {/* Note: Animations reset when switching tabs. This is generally expected. */}
                 <div className="space-y-12">
                   {/* --- Work Experience --- */}
-                  <section id={`work-${path}`}>
-                    <BlurFade delay={BLUR_FADE_DELAY * 8}>
-                      <h2 className="text-xl font-bold mb-4">
-                        Work Experience
-                      </h2>
-                    </BlurFade>
-                    <div className="flex flex-col gap-y-3">
-                      {DATA.work
-                        .filter((w) => w.category.includes(path))
-                        .map((work, id) => (
-                          <BlurFade
-                            key={work.company + work.title}
-                            delay={BLUR_FADE_DELAY * 9 + id * 0.05}
-                          >
-                            <ResumeCard
-                              logoUrl={work.logoUrl}
-                              altText={work.company}
-                              title={work.company}
-                              subtitle={work.title}
-                              href={work.href}
-                              badges={work.badges}
-                              period={`${work.start} - ${
-                                work.end ?? "Present"
-                              }`}
-                              description={work.description}
-                            />
+                  {(path === "engineer" || path === "musician") && (
+                    <section id={`work-${path}`}>
+                      <BlurFade delay={BLUR_FADE_DELAY * 8}>
+                        <h2 className="text-xl font-bold mb-4">
+                          Work Experience
+                        </h2>
+                      </BlurFade>
+                      <div className="flex flex-col gap-y-3">
+                        {DATA.work
+                          .filter((w) => w.category.includes(path))
+                          .map((work, id) => (
+                            <BlurFade
+                              key={work.company + work.title}
+                              delay={BLUR_FADE_DELAY * 9 + id * 0.05}
+                            >
+                              <ResumeCard
+                                logoUrl={work.logoUrl}
+                                altText={work.company}
+                                title={work.company}
+                                subtitle={work.title}
+                                href={work.href}
+                                badges={work.badges}
+                                period={`${work.start} - ${
+                                  work.end ?? "Present"
+                                }`}
+                                description={work.description}
+                              />
+                            </BlurFade>
+                          ))}
+                        {DATA.work.filter((w) => w.category.includes(path))
+                          .length === 0 && (
+                          <BlurFade delay={BLUR_FADE_DELAY * 9}>
+                            <p className="text-sm text-muted-foreground italic">
+                              No work experience listed for this path yet.
+                            </p>
                           </BlurFade>
-                        ))}
-                      {DATA.work.filter((w) => w.category.includes(path))
-                        .length === 0 && (
-                        <BlurFade delay={BLUR_FADE_DELAY * 9}>
-                          <p className="text-sm text-muted-foreground italic">
-                            No work experience listed for this path yet.
-                          </p>
+                        )}
+                      </div>
+                    </section>
+                  )}
+
+                  {/* --- Records --- */}
+                  {path === "musician" &&
+                    DATA.records &&
+                    DATA.records.length > 0 && (
+                      <section id={`records-${path}`}>
+                        <BlurFade delay={BLUR_FADE_DELAY * 8}>
+                          <h2 className="text-xl font-bold mb-4">
+                            Recordings & Session Work
+                          </h2>
                         </BlurFade>
-                      )}
-                    </div>
-                  </section>
+                        <div className="flex flex-col gap-y-3">
+                          {DATA.records.map((record, id) => (
+                            <BlurFade
+                              key={record.title + record.artist}
+                              delay={BLUR_FADE_DELAY * 9 + id * 0.05}
+                            >
+                              <RecordCard
+                                title={record.title}
+                                artist={record.artist}
+                                href={record.href}
+                                role={record.role}
+                                releaseDate={record.releaseDate}
+                                imageUrl={record.imageUrl}
+                              />
+                            </BlurFade>
+                          ))}
+                        </div>
+                      </section>
+                    )}
+
+                  {/* --- Education --- */}
+                  {(path === "engineer" || path === "musician") && (
+                    <section id={`education-${path}`}>
+                      <BlurFade delay={BLUR_FADE_DELAY * 8}>
+                        <h2 className="text-xl font-bold mb-4">Education</h2>
+                      </BlurFade>
+                      <div className="flex flex-col gap-y-3">
+                        {DATA.education
+                          .filter((e) => e.category.includes(path))
+                          .map((edu, id) => (
+                            <BlurFade
+                              key={edu.school + edu.degree}
+                              delay={BLUR_FADE_DELAY * 9 + id * 0.05}
+                            >
+                              <ResumeCard
+                                logoUrl={edu.logoUrl}
+                                altText={edu.school}
+                                title={edu.school}
+                                subtitle={edu.degree}
+                                href={edu.href}
+                                period={`${edu.start} - ${edu.end}`}
+                              />
+                            </BlurFade>
+                          ))}
+                        {DATA.education.filter((e) => e.category.includes(path))
+                          .length === 0 && (
+                          <BlurFade delay={BLUR_FADE_DELAY * 9}>
+                            <p className="text-sm text-muted-foreground italic">
+                              No education listed for this path yet.
+                            </p>
+                          </BlurFade>
+                        )}
+                      </div>
+                    </section>
+                  )}
 
                   {/* --- Projects --- */}
-                  {(path === "solopreneur" || path === "slam") && (
+                  {(path === "solopreneur" || path === "engineer") && (
                     <section id={`projects-${path}`}>
                       <BlurFade delay={BLUR_FADE_DELAY * 8}>
                         <h2 className="text-xl font-bold mb-4">Projects</h2>
@@ -187,122 +253,61 @@ export default function HomePage() {
                     </section>
                   )}
 
-                  {/* --- Records --- */}
-                  {path === "music" &&
-                    DATA.records &&
-                    DATA.records.length > 0 && (
-                      <section id={`records-${path}`}>
+                  {/* --- Awards --- */}
+
+                  {(path === "engineer" || path === "musician") &&
+                    DATA.awards &&
+                    DATA.awards.length > 0 && (
+                      <section id={`awards-${path}`}>
                         <BlurFade delay={BLUR_FADE_DELAY * 8}>
                           <h2 className="text-xl font-bold mb-4">
-                            Recordings & Session Work
+                            Awards & Recognition
                           </h2>
                         </BlurFade>
                         <div className="flex flex-col gap-y-3">
-                          {DATA.records.map((record, id) => (
-                            <BlurFade
-                              key={record.title + record.artist}
-                              delay={BLUR_FADE_DELAY * 9 + id * 0.05}
-                            >
-                              <RecordCard
-                                title={record.title}
-                                artist={record.artist}
-                                href={record.href}
-                                role={record.role}
-                                releaseDate={record.releaseDate}
-                                imageUrl={record.imageUrl}
-                              />
+                          {DATA.awards
+                            .filter((a) => a.category.includes(path))
+                            .map((award, id) => (
+                              <BlurFade
+                                key={award.title}
+                                delay={BLUR_FADE_DELAY * 9 + id * 0.05}
+                              >
+                                <Card className="p-3 border">
+                                  <h3 className="font-semibold text-sm">
+                                    {award.title}
+                                  </h3>
+                                  <p className="text-xs text-muted-foreground">
+                                    {award.issuingBody} - {award.date}
+                                  </p>
+                                  {award.description && (
+                                    <p className="text-xs mt-1 text-muted-foreground">
+                                      {award.description}
+                                    </p>
+                                  )}
+                                  {award.href && (
+                                    <Link
+                                      href={award.href}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-xs text-blue-600 hover:underline mt-1 block"
+                                    >
+                                      More Info
+                                    </Link>
+                                  )}
+                                </Card>
+                              </BlurFade>
+                            ))}
+                          {DATA.awards.filter((a) => a.category.includes(path))
+                            .length === 0 && (
+                            <BlurFade delay={BLUR_FADE_DELAY * 9}>
+                              <p className="text-sm text-muted-foreground italic">
+                                No awards listed for this path yet.
+                              </p>
                             </BlurFade>
-                          ))}
+                          )}
                         </div>
                       </section>
                     )}
-
-                  {/* --- Education --- */}
-                  <section id={`education-${path}`}>
-                    <BlurFade delay={BLUR_FADE_DELAY * 8}>
-                      <h2 className="text-xl font-bold mb-4">Education</h2>
-                    </BlurFade>
-                    <div className="flex flex-col gap-y-3">
-                      {DATA.education
-                        .filter((e) => e.category.includes(path))
-                        .map((edu, id) => (
-                          <BlurFade
-                            key={edu.school + edu.degree}
-                            delay={BLUR_FADE_DELAY * 9 + id * 0.05}
-                          >
-                            <ResumeCard
-                              logoUrl={edu.logoUrl}
-                              altText={edu.school}
-                              title={edu.school}
-                              subtitle={edu.degree}
-                              href={edu.href}
-                              period={`${edu.start} - ${edu.end}`}
-                            />
-                          </BlurFade>
-                        ))}
-                      {DATA.education.filter((e) => e.category.includes(path))
-                        .length === 0 && (
-                        <BlurFade delay={BLUR_FADE_DELAY * 9}>
-                          <p className="text-sm text-muted-foreground italic">
-                            No education listed for this path yet.
-                          </p>
-                        </BlurFade>
-                      )}
-                    </div>
-                  </section>
-
-                  {/* --- Awards --- */}
-                  {DATA.awards && DATA.awards.length > 0 && (
-                    <section id={`awards-${path}`}>
-                      <BlurFade delay={BLUR_FADE_DELAY * 8}>
-                        <h2 className="text-xl font-bold mb-4">
-                          Awards & Recognition
-                        </h2>
-                      </BlurFade>
-                      <div className="flex flex-col gap-y-3">
-                        {DATA.awards
-                          .filter((a) => a.category.includes(path))
-                          .map((award, id) => (
-                            <BlurFade
-                              key={award.title}
-                              delay={BLUR_FADE_DELAY * 9 + id * 0.05}
-                            >
-                              <Card className="p-3 border">
-                                <h3 className="font-semibold text-sm">
-                                  {award.title}
-                                </h3>
-                                <p className="text-xs text-muted-foreground">
-                                  {award.issuingBody} - {award.date}
-                                </p>
-                                {award.description && (
-                                  <p className="text-xs mt-1 text-muted-foreground">
-                                    {award.description}
-                                  </p>
-                                )}
-                                {award.href && (
-                                  <Link
-                                    href={award.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-xs text-blue-600 hover:underline mt-1 block"
-                                  >
-                                    More Info
-                                  </Link>
-                                )}
-                              </Card>
-                            </BlurFade>
-                          ))}
-                        {DATA.awards.filter((a) => a.category.includes(path))
-                          .length === 0 && (
-                          <BlurFade delay={BLUR_FADE_DELAY * 9}>
-                            <p className="text-sm text-muted-foreground italic">
-                              No awards listed for this path yet.
-                            </p>
-                          </BlurFade>
-                        )}
-                      </div>
-                    </section>
-                  )}
 
                   {/* --- Skills --- */}
                   <section id={`skills-${path}`}>
