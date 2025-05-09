@@ -17,6 +17,8 @@ interface ResumeCardProps {
   badges?: readonly string[];
   period: string;
   description?: string;
+  genresLine?: string; // Added for musician genres
+  maestro?: string; // Added for musician education (maestro)
 }
 
 export function ResumeCard({
@@ -28,6 +30,8 @@ export function ResumeCard({
   badges,
   period,
   description,
+  genresLine, // Added
+  maestro, // Added
 }: ResumeCardProps) {
   // No expand/collapse state for now, but keep the structure
   // const [isExpanded, setIsExpanded] = React.useState(false);
@@ -51,18 +55,28 @@ export function ResumeCard({
         {" "}
         <CardHeader className="p-0">
           <div className="flex items-center justify-between gap-x-2 text-base">
-            <h3 className="inline-flex items-center font-semibold leading-none text-xs sm:text-sm">
+            <h3 className="inline-flex items-center font-semibold leading-none text-base">
               {title}
               {href && (
                 <ChevronRightIcon className="size-4 ml-1 text-muted-foreground/50 transition-transform duration-300 ease-out group-hover:translate-x-1" />
               )}
             </h3>
-            <div className="text-xs sm:text-sm tabular-nums text-muted-foreground text-right shrink-0">
+            <div className="text-[10px] sm:text-xs tabular-nums text-muted-foreground text-right shrink-0">
               {" "}
               {period}
             </div>
           </div>
-          {subtitle && <div className="font-sans text-xs mt-1">{subtitle}</div>}
+          {subtitle && <div className="font-sans text-sm mt-1">{subtitle}</div>}
+          {maestro && (
+            <div className="font-sans text-xs text-muted-foreground mt-1">
+              Maestro: {maestro}
+            </div>
+          )}
+          {genresLine && (
+            <div className="font-sans text-xs text-muted-foreground mt-1">
+              {genresLine}
+            </div>
+          )}
           {badges && badges.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1">
               {badges.map((badge, index) => (
@@ -78,7 +92,7 @@ export function ResumeCard({
           )}
         </CardHeader>
         {description && (
-          <div className="mt-2 text-xs sm:text-sm prose prose-sm dark:prose-invert max-w-none text-muted-foreground">
+          <div className="mt-2 text-sm prose prose-sm dark:prose-invert max-w-none text-muted-foreground">
             {" "}
             <Markdown components={{ p: ({ children }) => <>{children}</> }}>
               {description}

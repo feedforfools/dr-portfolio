@@ -72,7 +72,7 @@ export function ProjectCard({
 
   const titleContent = (
     <CardTitle
-      className={`text-base font-semibold ${href ? "hover:underline" : ""}`}
+      className={`text-lg font-semibold ${href ? "hover:underline" : ""}`}
     >
       {title}
     </CardTitle>
@@ -114,10 +114,10 @@ export function ProjectCard({
               </Badge>
             )}
           </div>
-          <time className="font-sans text-xs text-muted-foreground">
+          <time className="font-sans text-[10px] sm:text-xs text-muted-foreground">
             {dates}
           </time>
-          <div className="prose prose-sm dark:prose-invert max-w-full text-pretty font-sans text-xs text-muted-foreground pt-1">
+          <div className="prose prose-sm dark:prose-invert max-w-full text-pretty font-sans text-sm text-muted-foreground pt-1">
             <Markdown components={{ p: ({ children }) => <>{children}</> }}>
               {description}
             </Markdown>
@@ -132,7 +132,7 @@ export function ProjectCard({
           <div className="mt-2 flex flex-wrap gap-1">
             {tags?.map((tag) => (
               <Badge
-                className="px-1 py-0 text-[10px]"
+                className="px-1 py-0 text-xs"
                 variant="secondary"
                 key={tag}
               >
@@ -157,7 +157,7 @@ export function ProjectCard({
               >
                 <Badge
                   key={idx}
-                  className="flex gap-1.5 px-2 py-1 text-[10px] items-center"
+                  className="flex gap-1.5 px-2 py-1 text-xs items-center"
                   variant="outline"
                 >
                   {link.icon}

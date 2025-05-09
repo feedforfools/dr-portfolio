@@ -133,6 +133,12 @@ export default function HomePage() {
                                   work.end ?? "Present"
                                 }`}
                                 description={work.description}
+                                genresLine={
+                                  work.category.includes("musician") &&
+                                  work.genres
+                                    ? work.genres.join(" / ")
+                                    : undefined
+                                }
                               />
                             </BlurFade>
                           ))}
@@ -158,7 +164,7 @@ export default function HomePage() {
                             Recordings & Session Work
                           </h2>
                         </BlurFade>
-                        <div className="flex flex-col gap-y-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {DATA.records.map((record, id) => (
                             <BlurFade
                               key={record.title + record.artist}
@@ -171,6 +177,7 @@ export default function HomePage() {
                                 role={record.role}
                                 releaseDate={record.releaseDate}
                                 imageUrl={record.imageUrl}
+                                genres={record.genres} // Pass genres
                               />
                             </BlurFade>
                           ))}
@@ -197,6 +204,7 @@ export default function HomePage() {
                                 altText={edu.school}
                                 title={edu.school}
                                 subtitle={edu.degree}
+                                maestro={edu.maestro}
                                 href={edu.href}
                                 period={`${edu.start} - ${edu.end}`}
                               />
@@ -272,29 +280,15 @@ export default function HomePage() {
                                 key={award.title}
                                 delay={BLUR_FADE_DELAY * 9 + id * 0.05}
                               >
-                                <Card className="p-3 border">
-                                  <h3 className="font-semibold text-sm">
-                                    {award.title}
-                                  </h3>
-                                  <p className="text-xs text-muted-foreground">
-                                    {award.issuingBody} - {award.date}
-                                  </p>
-                                  {award.description && (
-                                    <p className="text-xs mt-1 text-muted-foreground">
-                                      {award.description}
-                                    </p>
-                                  )}
-                                  {award.href && (
-                                    <Link
-                                      href={award.href}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-xs text-blue-600 hover:underline mt-1 block"
-                                    >
-                                      More Info
-                                    </Link>
-                                  )}
-                                </Card>
+                                <ResumeCard
+                                  logoUrl={award.logoUrl}
+                                  altText={award.issuingBody} // Used for AvatarFallback
+                                  title={award.title}
+                                  subtitle={award.issuingBody}
+                                  period={award.date}
+                                  description={award.description}
+                                  href={award.href}
+                                />
                               </BlurFade>
                             ))}
                           {DATA.awards.filter((a) => a.category.includes(path))

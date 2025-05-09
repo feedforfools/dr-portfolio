@@ -15,6 +15,7 @@ interface RecordCardProps {
   releaseDate: string;
   imageUrl?: string;
   className?: string;
+  genres?: string[]; // Added genres
 }
 
 export function RecordCard({
@@ -25,21 +26,27 @@ export function RecordCard({
   releaseDate,
   imageUrl,
   className,
+  genres, // Added
 }: RecordCardProps) {
   const cardContent = (
-    <Card className="flex items-center p-3 border hover:shadow-md transition-all duration-300 ease-out">
+    <Card
+      className={cn(
+        "flex items-center p-3 border hover:shadow-md transition-all duration-300 ease-out w-full max-w-md", // Changed max-w-lg to max-w-md
+        className
+      )}
+    >
       {/* Album Art */}
       <div className="flex-none mr-4">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={`${title} by ${artist}`}
-            width={64} // Small image size
-            height={64}
+            width={80} // Small image size
+            height={80}
             className="rounded-md object-cover aspect-square"
           />
         ) : (
-          <div className="w-16 h-16 rounded-md bg-muted flex items-center justify-center">
+          <div className="w-20 h-20 rounded-md bg-muted flex items-center justify-center">
             {/* Placeholder icon or initials */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -64,16 +71,23 @@ export function RecordCard({
       {/* Details */}
       <div className="flex-grow">
         <CardHeader className="p-0 mb-1">
-          <CardTitle className="text-sm font-semibold leading-tight">
-            {title}
-          </CardTitle>
-          <p className="text-xs text-muted-foreground">{artist}</p>
+          <div className="flex items-center justify-between gap-x-2 text-base">
+            <CardTitle className="text-lg font-semibold leading-tight">
+              {title}
+            </CardTitle>
+            <div className="text-[10px] sm:text-xs tabular-nums text-muted-foreground text-right shrink-0">
+              {releaseDate}
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground mt-1">{artist}</p>
         </CardHeader>
-        <CardContent className="p-0">
-          <p className="text-xs text-muted-foreground">Role: {role}</p>
-          <p className="text-xs text-muted-foreground">
-            Released: {releaseDate}
-          </p>
+        <CardContent className="p-0 mt-2">
+          {genres && genres.length > 0 && (
+            <p className="text-xs text-muted-foreground mb-1">
+              {genres.join(" / ")}
+            </p>
+          )}
+          <p className="text-sm text-muted-foreground">Role: {role}</p>
         </CardContent>
       </div>
     </Card>
