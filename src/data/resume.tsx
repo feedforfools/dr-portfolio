@@ -1,7 +1,11 @@
 import { Icons } from "@/components/icons";
-import { CodeIcon, HomeIcon, NotebookIcon, PencilLine } from "lucide-react";
-
-// Define TypeScript interfaces for structure and type safety
+import {
+  CodeIcon,
+  GlobeIcon,
+  HomeIcon,
+  NotebookIcon,
+  PencilLine,
+} from "lucide-react";
 
 interface NavItem {
   href: string;
@@ -13,30 +17,34 @@ interface SocialLink {
   name: string;
   url: string;
   icon: React.ElementType;
-  navbar: boolean; // To control if it appears in the navbar (if we keep it)
+  navbar: boolean; // To control if it appears in the navbar
 }
 
 interface ContactInfo {
   email: string;
-  tel: string; // Optional: Add if you want a phone number displayed
+  tel: string;
   social: Record<string, SocialLink>; // Use a Record for key-value pairs
 }
 
-// Define the categories for filtering
-export const ALL_PORTFOLIO_PATHS = ["slam", "solopreneur", "music"] as const;
+export const ALL_PORTFOLIO_PATHS = [
+  "engineer",
+  "solopreneur",
+  "musician",
+] as const;
 export type PortfolioPath = (typeof ALL_PORTFOLIO_PATHS)[number];
 
 interface WorkExperience {
   company: string;
   href?: string;
   badges?: readonly string[];
-  location: string;
+  location?: string;
   title: string;
   logoUrl: string;
   start: string;
-  end?: string; // End date is optional for current positions
-  description: string;
-  category: PortfolioPath[]; // <-- The crucial category tag
+  end?: string;
+  description?: string;
+  genres?: string[]; // Optional genres for musician roles
+  category: PortfolioPath[];
 }
 
 interface EducationItem {
@@ -46,272 +54,488 @@ interface EducationItem {
   logoUrl: string;
   start: string;
   end: string;
-  category: PortfolioPath[]; // <-- Category tag
+  maestro?: string; // Optional for music education
+  category: PortfolioPath[];
 }
 
-// Let's define skills as objects too, for easier categorization
 interface Skill {
   name: string;
-  category: PortfolioPath[]; // <-- Category tag
+  category: PortfolioPath[];
 }
 
-// Define Project Status (optional but useful)
 export type ProjectStatus = "Completed" | "In Progress" | "Archived" | "Idea";
 
 interface ProjectLink {
   type: string; // e.g., "Website", "Source", "Demo"
   href: string;
-  icon: React.ReactNode; // Allow any React node for icons
+  icon: React.ReactNode;
 }
 
 interface Project {
   title: string;
-  href?: string; // Link for the card itself
+  href?: string;
   dates: string;
-  active?: boolean; // Or use status
-  status?: ProjectStatus; // <-- New status field
-  description: string;
+  active?: boolean;
+  status?: ProjectStatus;
+  description?: string;
   technologies: readonly string[];
   links?: readonly ProjectLink[];
   image?: string;
   video?: string;
-  category: PortfolioPath[]; // <-- Category tag
+  category: PortfolioPath[];
 }
 
-// New 'Records' section structure
 interface RecordItem {
   title: string; // Album or Song title
   artist: string;
   href?: string; // Link to Spotify, Apple Music, etc.
   role: string; // e.g., "Keyboards", "Composer", "Arranger"
   releaseDate: string;
-  imageUrl?: string; // Album art
-  category: PortfolioPath[]; // <-- Should always be ['music']
+  imageUrl?: string;
+  category: PortfolioPath[];
+  genres?: string[];
 }
 
-// New 'Awards' section structure
 interface AwardItem {
   title: string;
   issuingBody: string;
   date: string;
   description?: string;
   href?: string;
-  category: PortfolioPath[]; // <-- Category tag
+  logoUrl?: string;
+  category: PortfolioPath[];
 }
 
-// Main DATA object structure
 interface PortfolioData {
   name: string;
   initials: string;
-  url: string; // Your domain
+  url: string;
   location: string;
-  locationLink?: string; // Optional link for location
+  locationLink?: string;
   description: string; // Used in hero section
   summary: string; // Used in about section
-  avatarUrl: string; // Path to your profile picture in /public
-  skills: readonly Skill[]; // Use the Skill interface
+  avatarUrl: string; // Path to profile picture in /public
+  skills: readonly Skill[];
   navbar: readonly NavItem[];
   contact: ContactInfo;
   work: readonly WorkExperience[];
   education: readonly EducationItem[];
   projects: readonly Project[];
-  records?: readonly RecordItem[]; // Optional for now
-  awards?: readonly AwardItem[]; // Optional for now
+  records?: readonly RecordItem[];
+  awards?: readonly AwardItem[];
 }
 
-// Export the main DATA object (populate with placeholders first)
 export const DATA: PortfolioData = {
-  name: "Denis", // Replace
-  initials: "DR", // Replace
-  url: "https://yourdomain.com", // Replace
-  location: "Your City, Country", // Replace
+  name: "Denis",
+  initials: "DR",
+  url: "https://www.feedforfools.com", // Replace
+  location: "Italy",
   // locationLink: "link_to_google_maps", // Optional
   description:
-    "Multi-passionate individual exploring SLAM, Entrepreneurship, and Music.", // Replace
+    "Software & Computer Vision Engineer with a robotics background, specializing in SLAM. Also exploring entrepreneurship and active as a professional musician.", // Adapted from CV title/summary
   summary:
-    "Detail your journey here. Talk about your paths and motivations. Use **markdown** if needed.", // Replace
-  avatarUrl: "/me.jpg", // We'll add this image to /public later
+    "Software Engineer with a robotics background and more than four years of professional experience, proficient in the development of innovative computer vision algorithms and specializing in SLAM and related fields.\n\nThe blend of my two passions, engineering and music, fuels my creativity and boosts my problem-solving skills and capacity for innovation in technology. I bring a friendly and cooperative attitude to every project, focusing on team achievements and the collective fulfillment of objectives. As a knowledge-hungry professional, I also continually push the boundaries of my expertise by engaging in diverse personal projects.", // Directly from CV
+  avatarUrl: "/img/me.jpg",
   navbar: [
-    // We might remove/change this later based on nav design
-    // { href: "/", icon: HomeIcon, label: "Home" },
-    // { href: "/#about", icon: UserIcon, label: "About"}, // Example section link
+    // Empty for now, as we decided the top bar might not have page links
   ],
   contact: {
-    email: "your.email@example.com", // Replace
-    tel: "+123456789", // Optional: Replace or remove
+    email: "denis.ronchese@gmail.com",
+    tel: "+39 320 6785694",
     social: {
-      // Add your actual social links here
-      GitHub: {
-        name: "GitHub",
-        url: "https://github.com/yourusername", // Replace
-        icon: Icons.github, // We'll define these soon
-        navbar: true, // Will show in Navbar if kept
-      },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://linkedin.com/in/yourusername", // Replace
+        url: "https://linkedin.com/in/denis-ronchese/",
         icon: Icons.linkedin,
-        navbar: true,
+        navbar: false, // Change to true if we add social icons to navbar
       },
-      // Add others like X, etc.
-      // Example:
-      // X: {
-      //   name: "X",
-      //   url: "https://x.com/yourusername",
-      //   icon: Icons.x,
-      //   navbar: true,
-      // },
+      GitHub: {
+        name: "GitHub",
+        url: "https://github.com/feedforfools",
+        icon: Icons.github,
+        navbar: false,
+      },
     },
   },
   work: [
-    // Add SAMPLE work experiences using the new structure
     {
-      company: "SLAM Company ABC",
-      href: "https://slamcompany.com",
-      location: "Remote",
-      title: "SLAM Engineer",
-      logoUrl: "/placeholder-logo.png", // Add logos to /public later
-      start: "Jan 2022",
+      company: "Leica Geosystems",
+      href: "https://leica-geosystems.com/",
+      location: "Azzano Decimo (PN), ITA",
+      title: "SLAM R&D Engineer",
+      logoUrl: "/img/companies/leica.jpg",
+      start: "Oct 2023",
       end: "Present",
       description:
-        "Worked on cool SLAM algorithms. Implemented sensor fusion techniques. Used C++ and ROS.",
-      category: ["slam"],
+        "- Contributed to multiple SLAM-related projects, focusing on registration algorithms, optimization techniques, point cloud processing, trajectory estimation. Improved MMS products performance and robustness across various applications.\n- Developed a novel Real-Time LiDAR-Inertial Odometry approach, significantly enhancing computational efficiency, accuracy, and robustness compared to existing company solutions.\n- Developing a novel LiDAR-Inertial SLAM approach, integrating a SLAM back-end to the previous odometry pipeline that is leveraging FGO, with loop closure and IMU pre-integration factors, among others.\n- Selected member of Reality Capture's SLAM Expert Group, collaborating with industry leaders to share insights, discuss cutting-edge research, and drive innovation in SLAM technology.", // Markdown list format
+      category: ["engineer"],
+      // badges: ["SLAM Expert Group"], // Example badge usage - discuss if needed
     },
     {
-      company: "My Side Project Inc.",
-      href: "https://mysideproject.com",
-      location: "Internet",
-      title: "Founder / Developer",
-      logoUrl: "/placeholder-logo.png",
-      start: "Jun 2023",
-      // end: "Present", // Omit 'end' for current roles
+      company: "EMAX",
+      href: "https://emaxsrl.com/",
+      location: "Orsago (TV), ITA",
+      title: "R&D Engineer, Lead R&D Engineer",
+      logoUrl: "/img/companies/emax.jpg",
+      start: "Nov 2020",
+      end: "Oct 2023",
       description:
-        "Building a SaaS application for managing cat photos. Using Next.js and Tailwind.",
-      category: ["solopreneur"],
+        "- Designed and developed an IoT infrastructure for tracking vehicles, human resources, and assets. Enhanced production adaptation and integrated compatibility with commercial devices.\n- Conducted a research project to analyze the condition of vehicles using video and LiDAR imaging to detect defects and potential accident damages in early stages.",
+      category: ["engineer"],
     },
     {
-      company: "Studio Session Work",
-      location: "Various Studios",
-      title: "Session Keyboardist",
-      logoUrl: "/placeholder-logo.png", // Maybe a generic music icon?
-      start: "2018",
-      // end: "Present", // Ongoing
+      company: "Danieli Automation",
+      href: "https://www.dca.it/",
+      location: "Buttrio (UD), ITA",
+      title: "Intern R&D Engineer",
+      logoUrl: "/img/companies/danieli-automation.jpg",
+      start: "Sep 2015",
+      end: "Mar 2016",
       description:
-        "Contributed keyboard parts to various artist recordings. Proficient in multiple genres.",
-      category: ["music"],
+        "- Designed and developed an IoT infrastructure for tracking vehicles, human resources, and assets. Enhanced production adaptation and integrated compatibility with commercial devices.\n- Conducted a research project to analyze the condition of vehicles using video and LiDAR imaging to detect defects and potential accident damages in early stages.",
+      category: ["engineer"],
+    },
+    {
+      company: "Pink Size",
+      href: "https://www.pinksize.it/",
+      title: "Keyboards, Backing Vocals",
+      logoUrl: "/img/bands/pink-size.jpg",
+      start: "Apr 2019",
+      end: "Present",
+      genres: ["Pink Floyd Tribute Band", "Prog", "Rock"],
+      category: ["musician"],
+    },
+    {
+      company: "Aurora Rays Band",
+      href: "https://www.aurorarays.com/",
+      title: "Keyboards",
+      logoUrl: "/img/bands/aurora-rays.jpeg",
+      start: "Aug 2020",
+      end: "Present",
+      genres: ["Pop", "Soul", "Jazz"],
+      category: ["musician"],
+    },
+    {
+      company: "Ronnie & the Maps",
+      href: "https://ronniegrace.com/",
+      title: "Keyboards",
+      logoUrl: "/img/bands/ronnie-grace.jpg",
+      start: "Dec 2023",
+      end: "Present",
+      genres: ["Pop", "Electropop", "Rock"],
+      category: ["musician"],
+    },
+    {
+      company: "IZ",
+      href: "https://izband.bandcamp.com/",
+      title: "Keyboards",
+      logoUrl: "/img/bands/iz.jpg",
+      start: "Sep 2012",
+      end: "Sep 2019",
+      genres: ["Fusion", "Prog", "Jazz"],
+      category: ["musician"],
     },
   ],
   education: [
-    // Add SAMPLE education items
     {
-      school: "University of Engineering",
-      href: "https://uni.edu",
-      degree: "M.Sc. Robotics & Computer Vision",
-      logoUrl: "/placeholder-logo.png",
-      start: "2019",
-      end: "2021",
-      category: ["slam"],
+      school: "Università degli Studi di Trento",
+      href: "https://www.unitn.it/en",
+      degree:
+        "Master's degree in Mechatronics Engineering (Electronics and Robotics)",
+      logoUrl: "/img/education/unitn.jpg",
+      start: "2017",
+      end: "2019",
+      category: ["engineer"],
     },
     {
-      school: "Self-Taught University",
-      degree: "Web Development & Entrepreneurship",
-      logoUrl: "/placeholder-logo.png",
-      start: "Ongoing",
-      end: "Present",
-      category: ["solopreneur", "slam"], // Can belong to multiple
+      school: "Università degli Studi di Trieste",
+      href: "https://www.units.it/en",
+      degree: "Bachelor's degree in Information Engineering (Computer Science)",
+      logoUrl: "/img/education/units.jpg",
+      start: "2012",
+      end: "2016",
+      category: ["engineer"],
     },
     {
-      school: "Music Conservatory",
-      href: "https://music.edu",
-      degree: "Advanced Diploma in Jazz Piano",
-      logoUrl: "/placeholder-logo.png",
-      start: "2015",
-      end: "2018",
-      category: ["music"],
+      school: "Private Lessons",
+      href: "https://www.gianpaolorinaldi.it/",
+      degree: "Jazz Piano and Improvisation",
+      maestro: "Gianpaolo Rinaldi",
+      logoUrl: "/img/education/rinaldi.jpg",
+      start: "Sep 2014",
+      end: "Jan 2020",
+      // location: "Fontanafredda (PN), ITA", // Discuss adding field
+      category: ["musician"],
+    },
+    {
+      school: "Circolo Culturale Musicale G. Verdi",
+      href: "https://www.circolomusicaleverdi.it/",
+      degree: "Modern Piano and Keyboards",
+      maestro: "Arno Barzan",
+      logoUrl: "/img/education/circolo-verdi.jpg",
+      start: "Sep 2004",
+      end: "Jun 2012",
+      // location: "Fontanafredda (PN), ITA", // Discuss adding field
+      category: ["musician"],
     },
   ],
   skills: [
-    // Add SAMPLE skills
-    { name: "C++", category: ["slam"] },
-    { name: "ROS", category: ["slam"] },
-    { name: "Computer Vision", category: ["slam"] },
-    { name: "React", category: ["solopreneur", "slam"] },
-    { name: "Next.js", category: ["solopreneur"] },
-    { name: "TypeScript", category: ["solopreneur", "slam"] },
+    // Consolidated and categorized from CV
+    // SLAM / CV Expertise
+    { name: "Computer Vision (Traditional/Deep)", category: ["engineer"] },
+    { name: "engineer", category: ["engineer"] },
+    { name: "Sensor Fusion", category: ["engineer"] },
+    { name: "Object Detection/Tracking", category: ["engineer"] },
+    { name: "LiDAR Processing", category: ["engineer"] },
+    { name: "IMU Processing", category: ["engineer"] },
+    { name: "GNSS", category: ["engineer"] },
+    { name: "OpenCV", category: ["engineer"] },
+    { name: "PCL (Point Cloud Library)", category: ["engineer"] },
+    { name: "TensorFlow", category: ["engineer"] },
+    { name: "MATLAB", category: ["engineer"] },
+    { name: "C++", category: ["engineer"] },
+    { name: "C", category: ["engineer"] },
+    { name: "Python", category: ["engineer", "solopreneur", "musician"] },
+    { name: "Cmake", category: ["engineer"] },
+    { name: "Conan", category: ["engineer"] },
+
+    // Solopreneur / Backend / General Dev
+    { name: "Back-end Development", category: ["solopreneur"] },
+    { name: "JavaScript", category: ["solopreneur"] },
     { name: "Node.js", category: ["solopreneur"] },
-    { name: "Piano/Keyboards", category: ["music"] },
-    { name: "Music Theory", category: ["music"] },
-    { name: "Composition", category: ["music"] },
-    { name: "Digital Audio Workstations (DAWs)", category: ["music"] },
+    { name: "REST APIs", category: ["solopreneur"] },
+    { name: "MongoDB", category: ["solopreneur"] }, // Or generalize to NoSQL
+    { name: "MySQL", category: ["solopreneur"] }, // Or generalize to SQL
+    { name: "Git", category: ["engineer", "solopreneur"] },
+    { name: "Agile Methodologies", category: ["engineer", "solopreneur"] },
+    {
+      name: "Unit & Integration Testing",
+      category: ["engineer", "solopreneur"],
+    },
+    { name: "Design Patterns", category: ["engineer", "solopreneur"] },
+    { name: "IoT Infrastructure", category: ["engineer", "solopreneur"] },
+    { name: "SaaS Development", category: ["solopreneur"] },
+    { name: "Figma", category: ["solopreneur"] }, // From Motherslacker!
+
+    // iOS Development (from Motherslacker!)
+    { name: "Swift", category: ["solopreneur"] },
+    { name: "Objective-C", category: ["solopreneur"] },
+    { name: "iOS SDK", category: ["solopreneur"] },
+    { name: "Xcode", category: ["solopreneur"] },
+
+    // Music
+    { name: "Piano & Keyboards", category: ["musician"] },
+    { name: "Hammond Organ", category: ["musician"] },
+    { name: "Music Production", category: ["musician"] },
+    { name: "Sound Design", category: ["musician"] },
+    { name: "Session Musician", category: ["musician"] },
+    { name: "Improvisation", category: ["musician"] },
   ],
   projects: [
-    // Add SAMPLE projects
     {
-      title: "My Awesome SaaS",
-      href: "https://myawesomesaas.com",
-      dates: "Jun 2023 - Present",
+      title: "Dr.SLAM",
+      href: "#",
+      dates: "Ongoing",
       status: "In Progress",
       description:
-        "A tool to help people organize their thoughts. Built with the latest tech.",
-      technologies: ["Next.js", "TypeScript", "TailwindCSS", "Supabase"],
+        "- Developing a comprehensive knowledge base on SLAM and related topics, including evaluation metrics, point cloud processing, linear algebra, and optimization theory.\n- Aimed at deepening personal expertise and possibly serving as a resource for newcomers to the field.\n- Simple and clean blog-like website built with Markdeep and hosted through GitHub Pages.",
+      technologies: ["Markdeep", "GitHub Pages", "SLAM Concepts"],
       links: [
-        {
-          type: "Website",
-          href: "https://myawesomesaas.com",
-          icon: <HomeIcon className="size-3" />, // Placeholder icon
-        },
-        {
-          type: "Source",
-          href: "https://github.com/your/repo",
-          icon: <CodeIcon className="size-3" />, // Placeholder icon
-        },
+        // Add GitHub Pages link if live
+        // { type: "Website", href: "...", icon: <GlobeIcon className="size-3" /> },
       ],
-      // image: "/project-image.png", // Add images to /public later
+      category: ["engineer"],
+    },
+    {
+      title: "Motherslacker!",
+      href: "#",
+      dates: "Ongoing",
+      status: "Idea",
+      description:
+        "- Developed an iOS application for monitoring and blocking app usage, featuring an innovative, user-engaging feature-masked business model, aimed at countering smartphone addiction and procrastination.\n- Currently in the early validation phase of the MVP, while finalizing technical details related to payment methods, and ensuring stringent user privacy and security measures.",
+      technologies: ["Swift", "Objective-C", "iOS SDK", "Xcode", "Figma"],
+      links: [],
       category: ["solopreneur"],
     },
     {
-      title: "Visual Odometry Library",
-      dates: "Jan 2022 - May 2022",
+      title: "Musensei",
+      href: "#",
+      dates: "Ongoing",
+      status: "Idea",
+      description:
+        "- Conceived a suite of digital tools tailored for musicians' educational and professional needs, enhancing learning efficiency and nurturing musical growth.\n- Developed REST APIs for automated music chords transcription, leveraging and combining in-market solutions for AI-based stem-separation.\n- Currently conducting a market study to assess user demand and explore the feasibility of additional features for the initial MVP, aiming at strategic validation and user engagement.",
+      technologies: ["Python", "JavaScript", "REST APIs", "AI/ML (Audio)"],
+      links: [],
+      category: ["solopreneur", "musician"],
+    },
+    {
+      title: "NeRD Organ XP",
+      href: "#", // Add link if there's more info/demo
+      dates: "Mar 2023 - Present", // Or ongoing if still tinkering
+      status: "Completed", // Assuming main design/dev is done
+      description:
+        "- Designed a MIDI musical keyboard with a custom interface and expansion modules for sound modulation.\n- Firmware development for the main unit and all the external modules.\n- Electronics prototyping and the final PCBs design, involving challenging tracing constraints (e.g. high-frequency digital traces for USB devices).",
+      technologies: [
+        "C",
+        "Teensy",
+        "MIDI",
+        "Bluetooth",
+        "USB",
+        "EasyEDA",
+        "Hardware Design",
+      ],
+      links: [],
+      category: ["solopreneur"],
+    },
+    {
+      title: "Augmented Reality Virtual Assistant (Cooking Aid)", // Shortened title
+      href: "https://ieeexplore.ieee.org/document/8428314",
+      dates: "Dec 2017 - Apr 2018",
       status: "Completed",
       description:
-        "Implemented a feature-based visual odometry pipeline from scratch in Python.",
-      technologies: ["Python", "OpenCV", "NumPy"],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/your/slam-repo",
-          icon: <CodeIcon className="size-3" />,
-        },
+        "Developed as part of the 2018 Workshop on Metrology for Industry 4.0 and IoT. Led a small team in creating a multidisciplinary Augmented Reality system using a ToF camera for object detection to assist cognitively impaired users.",
+      technologies: [
+        "MATLAB",
+        "Augmented Reality",
+        "ToF Cameras",
+        "Object Detection",
       ],
-      category: ["slam"],
+      category: ["engineer"],
     },
   ],
   records: [
-    // Add SAMPLE records
     {
-      title: "Album X",
-      artist: "Cool Band Name",
-      href: "https://spotify.link/example",
-      role: "Keyboards, Co-writer",
-      releaseDate: "2023",
-      imageUrl: "/album-art.jpg", // Add images to /public later
-      category: ["music"],
+      title: "In the City",
+      artist: "Kazooka",
+      href: "https://open.spotify.com/track/7CnaBmeMMtXBdIl5K24PWG?si=82ca675aa2164959",
+      role: "Keyboards",
+      releaseDate: "Feb 2025",
+      imageUrl: "/img/records/in-the-city.jpg",
+      category: ["musician"],
+      genres: ["Pop", "Rock", "Funk"],
+    },
+    {
+      title: "So Fine",
+      artist: "Kazooka",
+      href: "https://open.spotify.com/track/7byyZr8c1PuplxDenhJaLf?si=60e12aa72c184f02",
+      role: "Keyboards",
+      releaseDate: "Jan 2025",
+      imageUrl: "/img/records/so-fine.jpg",
+      category: ["musician"],
+      genres: ["Pop", "Rock", "Funk"],
+    },
+    {
+      title: "Hic Sunt Leones",
+      artist: "Ultima Frontiera",
+      href: "https://open.spotify.com/album/1EIs3s0ltpHNQpNqXMk62n?si=bnmJm9L9SCuEkMNlXO756w",
+      role: "Keyboards, Arrangements",
+      releaseDate: "Feb 2022",
+      imageUrl: "/img/records/hic-sunt-leones.jpg",
+      category: ["musician"],
+      genres: ["Rock", "Hard Rock"],
+    },
+    {
+      title: "Granted",
+      artist: "Ronnie Grace",
+      href: "https://open.spotify.com/track/7beGhVksYJKR9jxxqMgzgB?si=ae68ce752ebc4d10",
+      role: "Keyboards",
+      releaseDate: "Mar 2021",
+      imageUrl: "/img/records/granted.jpg",
+      category: ["musician"],
+      genres: ["Pop"],
+    },
+    {
+      title: "Il Desto Onironauta",
+      artist: "IZ",
+      href: "https://izband.bandcamp.com/album/il-desto-onironauta",
+      role: "Keyboards",
+      releaseDate: "May 2019",
+      imageUrl: "/img/records/il-desto-onironauta.jpg",
+      category: ["musician"],
+      genres: ["Fusion", "Prog", "Jazz"],
+    },
+    {
+      title: "Codename: R.E.C.E.S.S.",
+      artist: "Denis",
+      href: "https://soundcloud.com/feedforfools/sets/codename-r-e-c-e-s-s?si=0debcbd704f243b4a7dc3a9af1540229",
+      role: "Composer, Producer, Engineer",
+      releaseDate: "May 2018",
+      imageUrl: "/img/records/codename-recess.jpg",
+      category: ["musician"],
+      genres: ["Soundtrack", "Electronic", "Instrumental"],
+    },
+    {
+      title: "Silvia OST",
+      artist: "Denis",
+      href: "https://soundcloud.com/feedforfools/sets/silvia-ost-a-short-film-by-alexander-edwards?si=02cffa8a166f4809a68be336201fc680",
+      role: "Composer, Producer, Engineer",
+      releaseDate: "Oct 2017",
+      imageUrl: "/img/records/silvia.jpg",
+      category: ["musician"],
+      genres: ["Soundtrack", "Electronic", "Orchestral"],
+    },
+    {
+      title: "Today's Egg",
+      artist: "IZ",
+      href: "https://izband.bandcamp.com/album/todays-egg",
+      role: "Keyboards",
+      releaseDate: "Oct 2016",
+      imageUrl: "/img/records/today-s-egg.jpg",
+      category: ["musician"],
+      genres: ["Fusion", "Prog", "Jazz"],
+    },
+    {
+      title: "Sonder",
+      artist: "Denis, Paolo Jus, Davide Viel",
+      href: "https://www.youtube.com/watch?v=61f8mzN0Jww",
+      role: "Keyboards, Composer, Engineer",
+      releaseDate: "Jul 2016",
+      imageUrl: "/img/records/sonder.jpg",
+      category: ["musician"],
+      genres: ["Prog", "Fusion"],
+    },
+    {
+      title: "Amo de Tus Sueños",
+      artist: "Thabu",
+      href: "https://open.spotify.com/track/1HRo4DyzzJ5tuu4Dz5hTQ1?si=d310fdb26dc7420e",
+      role: "Keyboards",
+      releaseDate: "May 2016",
+      imageUrl: "/img/records/humanidad.jpeg",
+      category: ["musician"],
+      genres: ["Prog", "Metal"],
+    },
+    {
+      title: "Lebannen",
+      artist: "IZ Quartet",
+      href: "https://izband.bandcamp.com/album/lebannen",
+      role: "Keyboards, Co-Producer, Engineer",
+      releaseDate: "May 2015",
+      imageUrl: "/img/records/lebannen.jpg",
+      category: ["musician"],
+      genres: ["Fusion", "Prog", "Jazz"],
     },
   ],
   awards: [
-    // Add SAMPLE awards
     {
-      title: "Best Paper Award",
-      issuingBody: "Robotics Conference XYZ",
-      date: "2021",
-      description: "For research on multi-sensor fusion.",
-      category: ["slam"],
+      title: "🥈 2nd Place - Italian National Statistics Olympics",
+      issuingBody: "ISTAT - Italian National Institute of Statistics",
+      date: "2011",
+      logoUrl: "/img/awards/istat.jpg",
+      category: ["engineer"],
     },
     {
-      title: "Indie Music Award Nominee",
-      issuingBody: "Local Music Awards",
-      date: "2024",
-      category: ["music"],
+      title: "🥇 1st Place - Percoto Canta (Band contest, with IZ)",
+      issuingBody: "Associazione Percoto Canta",
+      date: "2017",
+      logoUrl: "/img/awards/percoto-canta.jpg",
+      category: ["musician"],
+    },
+    {
+      title: "🏆 Finalist - ROLI Next Awards (World's Top Talent)",
+      issuingBody: "ROLI",
+      date: "2016",
+      logoUrl: "/img/awards/roli.jpg",
+      category: ["musician"],
     },
   ],
-} as const; // Use "as const" for better type inference on readonly arrays/objects
+} as const;
