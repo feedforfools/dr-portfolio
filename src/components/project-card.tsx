@@ -17,7 +17,7 @@ import { ProjectStatus } from "@/data/resume";
 interface ProjectCardProps {
   title: string;
   href?: string;
-  description: string;
+  description?: string;
   dates: string;
   status?: ProjectStatus;
   tags: readonly string[];

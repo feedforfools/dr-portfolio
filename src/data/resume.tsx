@@ -43,7 +43,10 @@ interface WorkExperience {
   start: string;
   end?: string;
   description?: string;
-  genres?: string[]; // Optional genres for musician roles
+  genres?: string[];
+  youtubeLink?: string;
+  instagramLink?: string;
+  websiteLink?: string;
   category: PortfolioPath[];
 }
 
@@ -54,7 +57,8 @@ interface EducationItem {
   logoUrl: string;
   start: string;
   end: string;
-  maestro?: string; // Optional for music education
+  description?: string;
+  maestro?: string;
   category: PortfolioPath[];
 }
 
@@ -100,8 +104,8 @@ interface AwardItem {
   title: string;
   issuingBody: string;
   date: string;
+  detail?: string;
   description?: string;
-  href?: string;
   logoUrl?: string;
   category: PortfolioPath[];
 }
@@ -160,7 +164,6 @@ export const DATA: PortfolioData = {
   work: [
     {
       company: "Leica Geosystems",
-      href: "https://leica-geosystems.com/",
       location: "Azzano Decimo (PN), ITA",
       title: "SLAM R&D Engineer",
       logoUrl: "/img/companies/leica.jpg",
@@ -173,7 +176,6 @@ export const DATA: PortfolioData = {
     },
     {
       company: "EMAX",
-      href: "https://emaxsrl.com/",
       location: "Orsago (TV), ITA",
       title: "R&D Engineer, Lead R&D Engineer",
       logoUrl: "/img/companies/emax.jpg",
@@ -185,7 +187,6 @@ export const DATA: PortfolioData = {
     },
     {
       company: "Danieli Automation",
-      href: "https://www.dca.it/",
       location: "Buttrio (UD), ITA",
       title: "Intern R&D Engineer",
       logoUrl: "/img/companies/danieli-automation.jpg",
@@ -197,17 +198,21 @@ export const DATA: PortfolioData = {
     },
     {
       company: "Pink Size",
-      href: "https://www.pinksize.it/",
+      websiteLink: "https://www.pinksize.it/",
+      youtubeLink: "https://www.youtube.com/@pinksize",
+      instagramLink: "https://www.instagram.com/pink.size.music",
       title: "Keyboards, Backing Vocals",
       logoUrl: "/img/bands/pink-size.jpg",
       start: "Apr 2019",
       end: "Present",
-      genres: ["Pink Floyd Tribute Band", "Prog", "Rock"],
+      genres: ["Pink Floyd Tribute Band"],
       category: ["musician"],
     },
     {
       company: "Aurora Rays Band",
-      href: "https://www.aurorarays.com/",
+      websiteLink: "https://www.aurorarays.com/",
+      youtubeLink: "https://www.youtube.com/@auroraraysmusic",
+      instagramLink: "https://www.instagram.com/aurora_rays",
       title: "Keyboards",
       logoUrl: "/img/bands/aurora-rays.jpeg",
       start: "Aug 2020",
@@ -217,7 +222,9 @@ export const DATA: PortfolioData = {
     },
     {
       company: "Ronnie & the Maps",
-      href: "https://ronniegrace.com/",
+      websiteLink: "https://ronniegrace.com/",
+      youtubeLink: "https://www.youtube.com/@ronniegrace2162",
+      instagramLink: "https://www.instagram.com/ronniegrace",
       title: "Keyboards",
       logoUrl: "/img/bands/ronnie-grace.jpg",
       start: "Dec 2023",
@@ -227,7 +234,8 @@ export const DATA: PortfolioData = {
     },
     {
       company: "IZ",
-      href: "https://izband.bandcamp.com/",
+      websiteLink: "https://izband.bandcamp.com/",
+      youtubeLink: "https://www.youtube.com/@iz7678",
       title: "Keyboards",
       logoUrl: "/img/bands/iz.jpg",
       start: "Sep 2012",
@@ -260,7 +268,7 @@ export const DATA: PortfolioData = {
       school: "Private Lessons",
       href: "https://www.gianpaolorinaldi.it/",
       degree: "Jazz Piano and Improvisation",
-      maestro: "Gianpaolo Rinaldi",
+      maestro: "(M° Gianpaolo Rinaldi)",
       logoUrl: "/img/education/rinaldi.jpg",
       start: "Sep 2014",
       end: "Jan 2020",
@@ -271,7 +279,7 @@ export const DATA: PortfolioData = {
       school: "Circolo Culturale Musicale G. Verdi",
       href: "https://www.circolomusicaleverdi.it/",
       degree: "Modern Piano and Keyboards",
-      maestro: "Arno Barzan",
+      maestro: "(M° Arno Barzan)",
       logoUrl: "/img/education/circolo-verdi.jpg",
       start: "Sep 2004",
       end: "Jun 2012",
@@ -295,7 +303,7 @@ export const DATA: PortfolioData = {
     { name: "MATLAB", category: ["engineer"] },
     { name: "C++", category: ["engineer"] },
     { name: "C", category: ["engineer"] },
-    { name: "Python", category: ["engineer", "solopreneur", "musician"] },
+    { name: "Python", category: ["engineer", "solopreneur"] },
     { name: "Cmake", category: ["engineer"] },
     { name: "Conan", category: ["engineer"] },
 
@@ -330,6 +338,11 @@ export const DATA: PortfolioData = {
     { name: "Sound Design", category: ["musician"] },
     { name: "Session Musician", category: ["musician"] },
     { name: "Improvisation", category: ["musician"] },
+    { name: "Logic Pro X", category: ["musician"] },
+    { name: "Composition", category: ["musician"] },
+    { name: "Arranging", category: ["musician"] },
+    { name: "Music Theory", category: ["musician"] },
+    { name: "Final Cut Pro X", category: ["musician"] },
   ],
   projects: [
     {
@@ -524,14 +537,16 @@ export const DATA: PortfolioData = {
       category: ["engineer"],
     },
     {
-      title: "🥇 1st Place - Percoto Canta (Band contest, with IZ)",
+      title: "🥇 1st Place - Percoto Canta",
+      detail: "(with IZ)",
       issuingBody: "Associazione Percoto Canta",
       date: "2017",
       logoUrl: "/img/awards/percoto-canta.jpg",
       category: ["musician"],
     },
     {
-      title: "🏆 Finalist - ROLI Next Awards (World's Top Talent)",
+      title: "🏆 Finalist - ROLI Next Awards",
+      detail: "(World's Top Talent)",
       issuingBody: "ROLI",
       date: "2016",
       logoUrl: "/img/awards/roli.jpg",

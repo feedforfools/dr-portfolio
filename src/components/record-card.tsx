@@ -1,10 +1,13 @@
-// src/components/record-card.tsx
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FaSpotify, FaSoundcloud, FaApple, FaYoutube } from "react-icons/fa";
+import { Globe } from "lucide-react";
 
 // Interface matching the types in resume.tsx
 interface RecordCardProps {
@@ -18,6 +21,29 @@ interface RecordCardProps {
   genres?: string[]; // Added genres
 }
 
+const getIconForHref = (href?: string): React.ReactNode | null => {
+  if (!href) return null;
+  if (href.includes("spotify.com")) {
+    return <FaSpotify className="size-4" />;
+  }
+  if (href.includes("soundcloud.com")) {
+    return <FaSoundcloud className="size-4" />;
+  }
+  if (href.includes("youtube.com") || href.includes("youtu.be")) {
+    return <FaYoutube className="size-4" />;
+  }
+  return <Globe className="size-4" />; // Default generic icon
+};
+
+const getLinkLabel = (href?: string): string => {
+  if (!href) return "Link";
+  if (href.includes("spotify.com")) return "Spotify";
+  if (href.includes("soundcloud.com")) return "Soundcloud";
+  if (href.includes("youtube.com") || href.includes("youtu.be"))
+    return "YouTube";
+  return "Website";
+};
+
 export function RecordCard({
   title,
   artist,
@@ -28,6 +54,9 @@ export function RecordCard({
   className,
   genres, // Added
 }: RecordCardProps) {
+  const iconToShow = getIconForHref(href);
+  const linkLabel = getLinkLabel(href);
+
   const cardContent = (
     <Card
       className={cn(
@@ -70,43 +99,44 @@ export function RecordCard({
 
       {/* Details */}
       <div className="flex-grow">
-        <CardHeader className="p-0 mb-1">
+        <CardHeader className="p-0 mb-3">
           <div className="flex items-center justify-between gap-x-2 text-base">
-            <CardTitle className="text-lg font-semibold leading-tight">
+            <CardTitle className="text-md font-semibold leading-none">
               {title}
             </CardTitle>
             <div className="text-[10px] sm:text-xs tabular-nums text-muted-foreground text-right shrink-0">
               {releaseDate}
             </div>
           </div>
-          <p className="text-sm text-muted-foreground mt-1">{artist}</p>
-        </CardHeader>
-        <CardContent className="p-0 mt-2">
+          <p className="text-sm leading-none">{artist}</p>
           {genres && genres.length > 0 && (
-            <p className="text-xs text-muted-foreground mb-1">
+            <p className="text-xs text-muted-foreground mb-0 leading-none">
               {genres.join(" / ")}
             </p>
           )}
-          <p className="text-sm text-muted-foreground">Role: {role}</p>
+        </CardHeader>
+
+        <CardContent className="p-0 mt-auto">
+          {" "}
+          {/* Added mt-auto */}
+          <div className="flex items-center justify-between">
+            <p className="text-sm flex-grow mr-2">{role}</p>
+            {iconToShow && href && (
+              <Link
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={linkLabel}
+                className="text-muted-foreground hover:text-primary transition-colors shrink-0"
+              >
+                {iconToShow}
+              </Link>
+            )}
+          </div>
         </CardContent>
       </div>
     </Card>
   );
 
-  // If href exists, wrap the card content in a link
-  if (href) {
-    return (
-      <Link
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block"
-      >
-        {cardContent}
-      </Link>
-    );
-  }
-
-  // Otherwise, just render the card content (useful if no link provided)
   return cardContent;
 }

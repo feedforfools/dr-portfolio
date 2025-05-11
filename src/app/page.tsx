@@ -1,10 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BlurFade from "@/components/magicui/blur-fade";
 import { DATA, PortfolioPath, ALL_PORTFOLIO_PATHS } from "@/data/resume";
-import { cn } from "@/lib/utils";
 import Markdown from "react-markdown";
 import { ProjectCard } from "@/components/project-card";
 import { RecordCard } from "@/components/record-card";
@@ -108,10 +106,14 @@ export default function HomePage() {
                 <div className="space-y-12">
                   {/* --- Work Experience --- */}
                   {(path === "engineer" || path === "musician") && (
+                    // Change title to "Live Experience" for musician
+
                     <section id={`work-${path}`}>
                       <BlurFade delay={BLUR_FADE_DELAY * 8}>
                         <h2 className="text-xl font-bold mb-4">
-                          Work Experience
+                          {path === "musician"
+                            ? "Live Experience"
+                            : "Work Experience"}
                         </h2>
                       </BlurFade>
                       <div className="flex flex-col gap-y-3">
@@ -127,7 +129,9 @@ export default function HomePage() {
                                 altText={work.company}
                                 title={work.company}
                                 subtitle={work.title}
-                                href={work.href}
+                                websiteLink={work.websiteLink}
+                                instagramLink={work.instagramLink}
+                                youtubeLink={work.youtubeLink}
                                 badges={work.badges}
                                 period={`${work.start} - ${
                                   work.end ?? "Present"
@@ -205,7 +209,6 @@ export default function HomePage() {
                                 title={edu.school}
                                 subtitle={edu.degree}
                                 maestro={edu.maestro}
-                                href={edu.href}
                                 period={`${edu.start} - ${edu.end}`}
                               />
                             </BlurFade>
@@ -284,10 +287,10 @@ export default function HomePage() {
                                   logoUrl={award.logoUrl}
                                   altText={award.issuingBody} // Used for AvatarFallback
                                   title={award.title}
+                                  detail={award.detail}
                                   subtitle={award.issuingBody}
                                   period={award.date}
                                   description={award.description}
-                                  href={award.href}
                                 />
                               </BlurFade>
                             ))}
@@ -339,50 +342,12 @@ export default function HomePage() {
       {/* --- Contact Section --- */}
       <section id="contact" className="pt-8">
         <BlurFade delay={BLUR_FADE_DELAY * 8}>
-          <h2 className="text-xl font-bold mb-4 text-center">Get in Touch</h2>
-          <div className="flex justify-center items-center gap-4">
-            {Object.entries(DATA.contact.social).map(([name, social], id) => (
-              <BlurFade key={name} delay={BLUR_FADE_DELAY * 9 + id * 0.05}>
-                <Link
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={name}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <social.icon className="size-6" />
-                </Link>
-              </BlurFade>
-            ))}
-            <BlurFade
-              delay={
-                BLUR_FADE_DELAY * 9 +
-                Object.keys(DATA.contact.social).length * 0.05
-              }
-            >
-              <Link
-                href={`mailto:${DATA.contact.email}`}
-                aria-label="Email"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-mail size-6"
-                >
-                  <rect width="20" height="16" x="2" y="4" rx="2" />
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                </svg>
-              </Link>
-            </BlurFade>
-          </div>
+          <h2 className="text-5xl font-bold mb-4 text-center">Get in Touch</h2>
+          <p className="text-center text-2xl text-muted-foreground mb-8">
+            I’m always open to new opportunities and collaborations.
+            <br />
+            If you’d like to connect, please feel free to reach out!
+          </p>
         </BlurFade>
       </section>
     </main>
