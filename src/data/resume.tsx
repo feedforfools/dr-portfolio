@@ -13,17 +13,15 @@ interface NavItem {
   label: string;
 }
 
-interface SocialLink {
+interface ContactLink {
   name: string;
-  url: string;
+  url?: string;
   icon: React.ElementType;
   navbar: boolean; // To control if it appears in the navbar
 }
 
 interface ContactInfo {
-  email: string;
-  tel: string;
-  social: Record<string, SocialLink>; // Use a Record for key-value pairs
+  contact: Record<string, ContactLink>;
 }
 
 export const ALL_PORTFOLIO_PATHS = [
@@ -121,7 +119,7 @@ interface PortfolioData {
   avatarUrl: string; // Path to profile picture in /public
   skills: readonly Skill[];
   navbar: readonly NavItem[];
-  contact: ContactInfo;
+  contacts: ContactInfo;
   work: readonly WorkExperience[];
   education: readonly EducationItem[];
   projects: readonly Project[];
@@ -143,17 +141,27 @@ export const DATA: PortfolioData = {
   navbar: [
     // Empty for now, as we decided the top bar might not have page links
   ],
-  contact: {
-    email: "denis.ronchese@gmail.com",
-    tel: "+39 320 6785694",
-    social: {
-      LinkedIn: {
+  contacts: {
+    contact: {
+      email: {
+        name: "Email",
+        url: "hello@feedforfools.com",
+        icon: Icons.email,
+        navbar: false,
+      },
+      linkedin: {
         name: "LinkedIn",
         url: "https://linkedin.com/in/denis-ronchese/",
         icon: Icons.linkedin,
         navbar: false, // Change to true if we add social icons to navbar
       },
-      GitHub: {
+      x: {
+        name: "X (Twitter)",
+        url: "https://x.com/feedforfools",
+        icon: Icons.x,
+        navbar: false,
+      },
+      github: {
         name: "GitHub",
         url: "https://github.com/feedforfools",
         icon: Icons.github,
@@ -251,8 +259,8 @@ export const DATA: PortfolioData = {
       degree:
         "Master's degree in Mechatronics Engineering (Electronics and Robotics)",
       logoUrl: "/img/education/unitn.jpg",
-      start: "2017",
-      end: "2019",
+      start: "Oct 2016",
+      end: "Jul 2019",
       category: ["engineer"],
     },
     {
@@ -260,8 +268,8 @@ export const DATA: PortfolioData = {
       href: "https://www.units.it/en",
       degree: "Bachelor's degree in Information Engineering (Computer Science)",
       logoUrl: "/img/education/units.jpg",
-      start: "2012",
-      end: "2016",
+      start: "Oct 2012",
+      end: "Mar 2016",
       category: ["engineer"],
     },
     {

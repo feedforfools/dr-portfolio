@@ -348,6 +348,27 @@ export default function HomePage() {
             <br />
             If you’d like to connect, please feel free to reach out!
           </p>
+          <div className="flex justify-center gap-4">
+            {Object.entries(DATA.contacts.contact)
+              .filter(([key]) => ["email", "x", "github"].includes(key))
+              .map(([key, contact]) => {
+                const IconComponent = contact.icon;
+                const href =
+                  key === "email" ? `mailto:${contact.url}` : contact.url;
+                return (
+                  <Link
+                    key={key}
+                    href={href || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-primary"
+                  >
+                    <IconComponent className="w-7 h-7" />
+                    <span className="hidden md:inline"></span>
+                  </Link>
+                );
+              })}
+          </div>
         </BlurFade>
       </section>
     </main>
