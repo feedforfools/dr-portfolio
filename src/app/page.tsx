@@ -23,7 +23,7 @@ export default function HomePage() {
             <div className="flex flex-1 flex-col space-y-2 text-center md:text-left">
               <BlurFade delay={BLUR_FADE_DELAY * 1}>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  Hi, I'm {DATA.name.split(" ")[0]} 👋
+                  Hi, I'm {DATA.name.split(" ")[0]} 🤝
                 </h1>
               </BlurFade>
               <BlurFade delay={BLUR_FADE_DELAY * 2}>
@@ -76,7 +76,7 @@ export default function HomePage() {
         </BlurFade>
       </section>
 
-      {/* --- About Section --- */}
+      {/* --- About Section ---
       <section id="about">
         <BlurFade delay={BLUR_FADE_DELAY * 5}>
           <h2 className="text-xl font-bold mb-2">About</h2>
@@ -86,7 +86,7 @@ export default function HomePage() {
             <Markdown>{DATA.summary}</Markdown>
           </div>
         </BlurFade>
-      </section>
+      </section> */}
 
       {/* --- Path Switching Tabs & Content --- */}
       <section id="experience-projects">
@@ -226,7 +226,7 @@ export default function HomePage() {
                   )}
 
                   {/* --- Projects --- */}
-                  {(path === "solopreneur" || path === "engineer") && (
+                  {path === "solopreneur" && (
                     <section id={`projects-${path}`}>
                       <BlurFade delay={BLUR_FADE_DELAY * 8}>
                         <h2 className="text-xl font-bold mb-4">Projects</h2>
@@ -307,31 +307,33 @@ export default function HomePage() {
                     )}
 
                   {/* --- Skills --- */}
-                  <section id={`skills-${path}`}>
-                    <BlurFade delay={BLUR_FADE_DELAY * 8}>
-                      <h2 className="text-xl font-bold mb-4">Skills</h2>
-                    </BlurFade>
-                    <div className="flex flex-wrap gap-1">
-                      {DATA.skills
-                        .filter((s) => s.category.includes(path))
-                        .map((skill, id) => (
-                          <BlurFade
-                            key={skill.name}
-                            delay={BLUR_FADE_DELAY * 9 + id * 0.05}
-                          >
-                            <Badge>{skill.name}</Badge>
+                  {(path === "engineer" || path === "musician") && (
+                    <section id={`skills-${path}`}>
+                      <BlurFade delay={BLUR_FADE_DELAY * 8}>
+                        <h2 className="text-xl font-bold mb-4">Skills</h2>
+                      </BlurFade>
+                      <div className="flex flex-wrap gap-1">
+                        {DATA.skills
+                          .filter((s) => s.category.includes(path))
+                          .map((skill, id) => (
+                            <BlurFade
+                              key={skill.name}
+                              delay={BLUR_FADE_DELAY * 9 + id * 0.05}
+                            >
+                              <Badge>{skill.name}</Badge>
+                            </BlurFade>
+                          ))}
+                        {DATA.skills.filter((s) => s.category.includes(path))
+                          .length === 0 && (
+                          <BlurFade delay={BLUR_FADE_DELAY * 9}>
+                            <p className="text-sm text-muted-foreground italic">
+                              No skills listed for this path yet.
+                            </p>
                           </BlurFade>
-                        ))}
-                      {DATA.skills.filter((s) => s.category.includes(path))
-                        .length === 0 && (
-                        <BlurFade delay={BLUR_FADE_DELAY * 9}>
-                          <p className="text-sm text-muted-foreground italic">
-                            No skills listed for this path yet.
-                          </p>
-                        </BlurFade>
-                      )}
-                    </div>
-                  </section>
+                        )}
+                      </div>
+                    </section>
+                  )}
                 </div>
               </TabsContent>
             ))}
@@ -342,8 +344,10 @@ export default function HomePage() {
       {/* --- Contact Section --- */}
       <section id="contact" className="pt-8">
         <BlurFade delay={BLUR_FADE_DELAY * 8}>
-          <h2 className="text-5xl font-bold mb-4 text-center">Get in Touch</h2>
-          <p className="text-center text-2xl text-muted-foreground mb-8">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-center">
+            Get in Touch
+          </h2>
+          <p className="text-center sm:text-xl text-muted-foreground mb-8">
             I’m always open to new opportunities and collaborations.
             <br />
             If you’d like to connect, please feel free to reach out!

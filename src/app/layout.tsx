@@ -35,7 +35,7 @@ export default function RootLayout({
           <TooltipProvider delayDuration={0}>
             {" "}
             <Navbar />
-            <main className="flex-1 max-w-4xl mx-auto py-12 sm:py-16 px-6">
+            <main className="flex-1 max-w-3xl mx-auto py-12 sm:py-16 px-6">
               {" "}
               {children}
             </main>

@@ -134,7 +134,7 @@ export const DATA: PortfolioData = {
   location: "Italy",
   // locationLink: "link_to_google_maps", // Optional
   description:
-    "Software & Computer Vision Engineer with a robotics background, specializing in SLAM. Also exploring entrepreneurship and active as a professional musician.", // Adapted from CV title/summary
+    "I'm a software engineer, musician, and I really love building things. When I'm not doing all that, usually I'm complaining about not having enough time to do all that.",
   summary:
     "Software Engineer with a robotics background and more than four years of professional experience, proficient in the development of innovative computer vision algorithms and specializing in SLAM and related fields.\n\nThe blend of my two passions, engineering and music, fuels my creativity and boosts my problem-solving skills and capacity for innovation in technology. I bring a friendly and cooperative attitude to every project, focusing on team achievements and the collective fulfillment of objectives. As a knowledge-hungry professional, I also continually push the boundaries of my expertise by engaging in diverse personal projects.", // Directly from CV
   avatarUrl: "/img/me.jpg",
@@ -298,50 +298,29 @@ export const DATA: PortfolioData = {
   skills: [
     // Consolidated and categorized from CV
     // SLAM / CV Expertise
-    { name: "Computer Vision (Traditional/Deep)", category: ["engineer"] },
-    { name: "engineer", category: ["engineer"] },
-    { name: "Sensor Fusion", category: ["engineer"] },
-    { name: "Object Detection/Tracking", category: ["engineer"] },
-    { name: "LiDAR Processing", category: ["engineer"] },
-    { name: "IMU Processing", category: ["engineer"] },
-    { name: "GNSS", category: ["engineer"] },
-    { name: "OpenCV", category: ["engineer"] },
-    { name: "PCL (Point Cloud Library)", category: ["engineer"] },
-    { name: "TensorFlow", category: ["engineer"] },
-    { name: "MATLAB", category: ["engineer"] },
     { name: "C++", category: ["engineer"] },
-    { name: "C", category: ["engineer"] },
     { name: "Python", category: ["engineer", "solopreneur"] },
-    { name: "Cmake", category: ["engineer"] },
-    { name: "Conan", category: ["engineer"] },
-
-    // Solopreneur / Backend / General Dev
-    { name: "Back-end Development", category: ["solopreneur"] },
-    { name: "JavaScript", category: ["solopreneur"] },
-    { name: "Node.js", category: ["solopreneur"] },
-    { name: "REST APIs", category: ["solopreneur"] },
-    { name: "MongoDB", category: ["solopreneur"] }, // Or generalize to NoSQL
-    { name: "MySQL", category: ["solopreneur"] }, // Or generalize to SQL
-    { name: "Git", category: ["engineer", "solopreneur"] },
-    { name: "Agile Methodologies", category: ["engineer", "solopreneur"] },
-    {
-      name: "Unit & Integration Testing",
-      category: ["engineer", "solopreneur"],
-    },
-    { name: "Design Patterns", category: ["engineer", "solopreneur"] },
-    { name: "IoT Infrastructure", category: ["engineer", "solopreneur"] },
-    { name: "SaaS Development", category: ["solopreneur"] },
-    { name: "Figma", category: ["solopreneur"] }, // From Motherslacker!
-
-    // iOS Development (from Motherslacker!)
-    { name: "Swift", category: ["solopreneur"] },
-    { name: "Objective-C", category: ["solopreneur"] },
-    { name: "iOS SDK", category: ["solopreneur"] },
-    { name: "Xcode", category: ["solopreneur"] },
-
+    { name: "Sensor Fusion", category: ["engineer"] },
+    { name: "SLAM", category: ["engineer"] },
+    { name: "Non-linear Optimization", category: ["engineer"] },
+    { name: "Computer Vision", category: ["engineer"] },
+    { name: "Object Detection", category: ["engineer"] },
+    { name: "Object Tracking", category: ["engineer"] },
+    { name: "LiDAR", category: ["engineer"] },
+    { name: "IMU", category: ["engineer"] },
+    { name: "GNSS", category: ["engineer"] },
+    { name: "ToF Cameras", category: ["engineer"] },
+    // General Dev
+    { name: "Git", category: ["engineer"] },
+    { name: "Agile Methodologies", category: ["engineer"] },
+    { name: "Unit Testing", category: ["engineer"] },
+    { name: "Integration Testing", category: ["engineer"] },
+    { name: "Design Patterns", category: ["engineer"] },
     // Music
-    { name: "Piano & Keyboards", category: ["musician"] },
+    { name: "Piano", category: ["musician"] },
+    { name: "Keyboards", category: ["musician"] },
     { name: "Hammond Organ", category: ["musician"] },
+    { name: "Synthesizers", category: ["musician"] },
     { name: "Music Production", category: ["musician"] },
     { name: "Sound Design", category: ["musician"] },
     { name: "Session Musician", category: ["musician"] },
@@ -349,7 +328,7 @@ export const DATA: PortfolioData = {
     { name: "Logic Pro X", category: ["musician"] },
     { name: "Composition", category: ["musician"] },
     { name: "Arranging", category: ["musician"] },
-    { name: "Music Theory", category: ["musician"] },
+    { name: "Advanced Music Theory", category: ["musician"] },
     { name: "Final Cut Pro X", category: ["musician"] },
   ],
   projects: [
@@ -426,6 +405,16 @@ export const DATA: PortfolioData = {
   ],
   records: [
     {
+      title: "But I Still Don't Know",
+      artist: "Kazooka",
+      href: "https://open.spotify.com/track/2oeXEI7XtMffxxk8VHAXSZ?si=447cef8862c24cb6",
+      role: "Keyboards",
+      releaseDate: "May 2025",
+      imageUrl: "/img/records/but-i-still-dont-know.jpg",
+      category: ["musician"],
+      genres: ["Pop", "Ballad", "Rock"],
+    },
+    {
       title: "In the City",
       artist: "Kazooka",
       href: "https://open.spotify.com/track/7CnaBmeMMtXBdIl5K24PWG?si=82ca675aa2164959",
@@ -449,7 +438,7 @@ export const DATA: PortfolioData = {
       title: "Hic Sunt Leones",
       artist: "Ultima Frontiera",
       href: "https://open.spotify.com/album/1EIs3s0ltpHNQpNqXMk62n?si=bnmJm9L9SCuEkMNlXO756w",
-      role: "Keyboards, Arrangements",
+      role: "Keyboards, Arranger",
       releaseDate: "Feb 2022",
       imageUrl: "/img/records/hic-sunt-leones.jpg",
       category: ["musician"],
@@ -476,7 +465,7 @@ export const DATA: PortfolioData = {
       genres: ["Fusion", "Prog", "Jazz"],
     },
     {
-      title: "Codename: R.E.C.E.S.S.",
+      title: "Codename: RECESS",
       artist: "Denis",
       href: "https://soundcloud.com/feedforfools/sets/codename-r-e-c-e-s-s?si=0debcbd704f243b4a7dc3a9af1540229",
       role: "Composer, Producer, Engineer",
@@ -509,7 +498,7 @@ export const DATA: PortfolioData = {
       title: "Sonder",
       artist: "Denis, Paolo Jus, Davide Viel",
       href: "https://www.youtube.com/watch?v=61f8mzN0Jww",
-      role: "Keyboards, Composer, Engineer",
+      role: "Keys, Composer, Producer",
       releaseDate: "Jul 2016",
       imageUrl: "/img/records/sonder.jpg",
       category: ["musician"],
@@ -529,7 +518,7 @@ export const DATA: PortfolioData = {
       title: "Lebannen",
       artist: "IZ Quartet",
       href: "https://izband.bandcamp.com/album/lebannen",
-      role: "Keyboards, Co-Producer, Engineer",
+      role: "Keyboards, Producer, Engineer",
       releaseDate: "May 2015",
       imageUrl: "/img/records/lebannen.jpg",
       category: ["musician"],

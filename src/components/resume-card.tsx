@@ -78,7 +78,7 @@ export function ResumeCard({
       {/* Top section: Avatar and main textual content */}
       <div className="flex w-full items-start">
         <div className="flex-none">
-          <Avatar className="border size-12 bg-muted-background dark:bg-foreground">
+          <Avatar className="no-border size-12 bg-muted-background">
             <AvatarImage
               src={logoUrl}
               alt={altText}
