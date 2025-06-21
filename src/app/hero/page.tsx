@@ -35,14 +35,10 @@ export default function HeroToggleTestPage() {
           onPathChange={handlePathChange}
           textData={{
             name: "Denis Ronchese",
-            titles: [
-              "Hello again! 🤟",
-              "Welcome to my world!",
-              "Hello there! 🤝",
-            ],
+            titles: ["Hello again! 🤟", "", "Hello there! 🤝"],
             descriptions: [
               "I'm also a keyboard player, music producer, and sound designer",
-              "This is where my two worlds collide: I love to build things",
+              "",
               "I'm Denis, I'm a Software Engineer specializing in SLAM and Computer Vision for robotics",
             ],
             location: "San Francisco, CA",
