@@ -101,16 +101,16 @@ export function RecordCard({
       <div className="flex-grow">
         <CardHeader className="p-0 mb-3">
           <div className="flex items-center justify-between gap-x-2 text-base">
-            <CardTitle className="text-md font-semibold leading-none">
+            <CardTitle className="text-md font-semibold leading-none truncate min-w-0">
               {title}
             </CardTitle>
             <div className="text-[10px] sm:text-xs tabular-nums text-muted-foreground text-right shrink-0">
               {releaseDate}
             </div>
           </div>
-          <p className="text-sm leading-none">{artist}</p>
+          <p className="text-sm leading-none truncate">{artist}</p>
           {genres && genres.length > 0 && (
-            <p className="text-xs text-muted-foreground mb-0 leading-none">
+            <p className="text-xs text-muted-foreground mb-0 leading-none truncate">
               {genres.join(" / ")}
             </p>
           )}
@@ -120,7 +120,7 @@ export function RecordCard({
           {" "}
           {/* Added mt-auto */}
           <div className="flex items-center justify-between">
-            <p className="text-sm flex-grow mr-2">{role}</p>
+            <p className="text-sm flex-grow mr-2 truncate min-w-0">{role}</p>
             {iconToShow && href && (
               <Link
                 href={href}
