@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
 import "@/app/lightbulb.css";
 
@@ -8,32 +8,41 @@ interface LightbulbProps {
   className?: string;
   isOn?: boolean;
   onToggle?: (isOn: boolean) => void;
+  flicker?: boolean;
 }
 
 export function Lightbulb({
   className,
   isOn = false,
   onToggle,
+  flicker = false,
 }: LightbulbProps) {
-  const [lightState, setLightState] = useState(isOn);
-
   const handleToggle = () => {
-    const newState = !lightState;
-    setLightState(newState);
-    onToggle?.(newState);
+    // Only call the toggle function if it's provided
+    onToggle?.(!isOn);
   };
 
   return (
-    <div className={cn("bulb-container", className)}>
-      <div className={`${lightState ? "night" : ""}`}>
+    <div
+      className={cn("bulb-container", className)}
+      style={{ overflow: "visible" }}
+    >
+      <div className={cn({ night: isOn })} style={{ overflow: "visible" }}>
         <button
           className="bulb-light"
           onClick={handleToggle}
-          aria-label={`Turn light ${lightState ? "off" : "on"}`}
+          aria-label={`Turn light ${isOn ? "off" : "on"}`}
+          // The button is only interactive if an onToggle handler is passed
+          disabled={!onToggle}
+          style={{ overflow: "visible" }}
         >
           <div id="light"></div>
           <div id="bulb">
-            <div className="bulb-top">
+            <div
+              className={cn("bulb-top", {
+                "animate-bulb-flicker": flicker && isOn,
+              })}
+            >
               <div className="reflection"></div>
             </div>
             <div className="bulb-middle-1"></div>

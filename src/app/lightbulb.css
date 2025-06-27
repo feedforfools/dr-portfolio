@@ -5,6 +5,7 @@
 .bulb-container {
   text-align: center;
   margin: 20px auto;
+  overflow: visible;
 }
 
 .bulb-light {
@@ -16,6 +17,7 @@
   cursor: pointer;
   display: block;
   z-index: 1;
+  overflow: visible;
 }
 
 #light {

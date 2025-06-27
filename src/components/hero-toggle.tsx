@@ -4,8 +4,10 @@ import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { Lightbulb } from "@/components/ui/lightbulb";
 import type { PortfolioPath } from "@/data/resume";
+import { motion } from "framer-motion";
 
 type VisualTogglePosition = "left" | "middle" | "right";
+type AnimationState = "hidden" | "popup" | "grow";
 
 interface HeroToggleProps {
   imageUrl: string;
@@ -48,6 +50,35 @@ const BlurFade: React.FC<{ delay: number; children: React.ReactNode }> = ({
   );
 };
 
+// Framer Motion variants for the lightbulb animation
+const lightbulbVariants = {
+  hidden: { opacity: 0, scale: 0, y: "50%", x: "-50%" },
+  popup: {
+    opacity: 1,
+    scale: 0.1,
+    y: "-47%",
+    x: "-61%",
+    transition: {
+      type: "spring",
+      stiffness: 500,
+      damping: 25,
+      bounce: 1,
+      delay: 0.75,
+    },
+  },
+  grow: {
+    opacity: 1,
+    scale: 1.3,
+    y: "-16%",
+    x: "-50%",
+    transition: {
+      delay: 0.2,
+      duration: 1.5,
+      ease: [0.1, 0.8, 1, 1],
+    },
+  },
+};
+
 const HeroToggle: React.FC<HeroToggleProps> = ({
   imageUrl,
   paths,
@@ -83,7 +114,22 @@ const HeroToggle: React.FC<HeroToggleProps> = ({
 
   const [textKey, setTextKey] = useState(0);
 
+  // State for controlling the new animation sequence
+  const [animationState, setAnimationState] =
+    useState<AnimationState>("hidden");
+  const [isBulbOn, setIsBulbOn] = useState(true);
+  const [showFlicker, setShowFlicker] = useState(false);
+
   useEffect(() => {
+    if (activeVisualPosition === "middle") {
+      setAnimationState("popup");
+    } else {
+      // Reset animation when not in middle
+      setAnimationState("hidden");
+      setIsBulbOn(true);
+      setShowFlicker(false);
+    }
+
     const newPath = getPathFromPosition(activeVisualPosition);
     onPathChange(newPath);
     setTextKey((prev) => prev + 1);
@@ -92,7 +138,7 @@ const HeroToggle: React.FC<HeroToggleProps> = ({
   useEffect(() => {
     setActiveVisualPosition(getPositionFromPath(initialPath));
     setTextKey((prev) => prev + 1);
-  }, [initialPath, paths, getPathFromPosition]);
+  }, [initialPath, paths, getPositionFromPath]);
 
   const handlePlaygroundClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
@@ -161,41 +207,44 @@ const HeroToggle: React.FC<HeroToggleProps> = ({
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" style={{ overflow: "visible" }}>
       {/* Toggle Component */}
       <div
-        className={`relative w-full h-72 cursor-pointer overflow-hidden group ${playgroundClassName}`}
+        className={`relative w-full h-72 cursor-pointer group ${playgroundClassName}`}
         onClick={handlePlaygroundClick}
         role="radiogroup"
         aria-label="Hero section toggle to select portfolio path"
+        style={{ overflow: "visible" }}
       >
-        {/* Lightbulb Container */}
-        <div
-          className={`
-            absolute left-1/2
-            flex items-center justify-center 
-            transition-all duration-700 ease-in-out
-            ${activeVisualPosition === "middle" ? "delay-300" : "delay-0"}
-            z-30
-            ${
-              activeVisualPosition === "middle"
-                ? "top-1/2 opacity-100"
-                : "top-[calc(100%-4.5rem)] md:top-[calc(100%-5.75rem)] opacity-0"
-            }
-          `}
+        {/* Lightbulb Container - Now powered by Framer Motion with overflow visible */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 z-30 flex items-center justify-center"
           style={{
-            transform:
-              activeVisualPosition === "middle"
-                ? "translateX(-50%) translateY(-16%) scale(1.3)"
-                : "translateX(-50%) translateY(-50%) scale(0)",
             transformOrigin: "center center",
+            overflow: "visible",
+          }}
+          variants={lightbulbVariants}
+          initial="hidden"
+          animate={animationState}
+          onAnimationComplete={(definition) => {
+            if (definition === "popup") {
+              setAnimationState("grow");
+            }
+            if (definition === "grow") {
+              // After growing, turn on the bulb and trigger the flicker
+              setIsBulbOn(true);
+              setShowFlicker(false);
+              // The flicker animation lasts 1s, so we can turn off the trigger class after
+              setTimeout(() => setShowFlicker(false), 1000);
+            }
           }}
         >
           <Lightbulb
-            isOn={activeVisualPosition === "middle"}
+            isOn={isBulbOn}
+            flicker={showFlicker}
             className="pointer-events-none" // Container handles click
           />
-        </div>
+        </motion.div>
 
         {/* Floating Text Layer */}
         <div
