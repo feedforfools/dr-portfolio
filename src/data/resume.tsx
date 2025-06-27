@@ -435,6 +435,16 @@ export const DATA: PortfolioData = {
       genres: ["Pop", "Rock", "Funk"],
     },
     {
+      title: "Castelbrando (Say yes)",
+      artist: "Ronnie Grace",
+      href: "https://www.youtube.com/watch?v=ipy1XhPkF-E",
+      role: "Keyboards",
+      releaseDate: "Sep 2022",
+      imageUrl: "/img/records/castelbrando.jpg",
+      category: ["musician"],
+      genres: ["Pop", "Rock", "Ballad"],
+    },
+    {
       title: "Hic Sunt Leones",
       artist: "Ultima Frontiera",
       href: "https://open.spotify.com/album/1EIs3s0ltpHNQpNqXMk62n?si=bnmJm9L9SCuEkMNlXO756w",
@@ -465,7 +475,7 @@ export const DATA: PortfolioData = {
       genres: ["Fusion", "Prog", "Jazz"],
     },
     {
-      title: "Codename: RECESS",
+      title: "Codename: R.E.C.E.S.S.",
       artist: "Denis",
       href: "https://soundcloud.com/feedforfools/sets/codename-r-e-c-e-s-s?si=0debcbd704f243b4a7dc3a9af1540229",
       role: "Composer, Producer, Engineer",
